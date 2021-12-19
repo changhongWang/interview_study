@@ -8,19 +8,35 @@
  */
 
 // 最简单的防抖函数：设置一个定时器，每当重复调用的时候，就清除定时器，重新定时，直到在设定的时间内没有重复调用函数
-function debounce(fn, gapTime) {
+function debounce(fn, delay) {
     let timer;
     let baseTime = new Date().getTime();
     return function() {
         const currTime = new Date().getTime();
-        if (currTime - baseTime < gapTime) {
+        if (currTime - baseTime < delay) {
             // 小于间隔时间 clean
             clearTimeout(timer);
         }
         timer = setTimeout(() => {
             fn();
-        }, gapTime);
+        }, delay);
     }
+}
+
+// 掘金文章写法
+function deboucne2(fn, delay) {
+    // timer是一个定时器
+    let timer = null;
+    // 返回一个闭包函数, 用闭包保存timer确保其不被销毁，重复触发会清除上一次的定时器
+    return function() {
+        // 调用一次就清除上次的定时器
+        clearTimeout(timer);
+        // 设置新的定时器
+        timer = setTimeout(function() {
+            fn();
+        }, delay)
+    }
+
 }
 
 const fn = debounce(() => {
