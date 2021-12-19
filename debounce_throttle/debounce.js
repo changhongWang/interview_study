@@ -8,7 +8,7 @@
  */
 
 // 最简单的防抖函数：设置一个定时器，每当重复调用的时候，就清除定时器，重新定时，直到在设定的时间内没有重复调用函数
-function debounce(fn, delay) {
+function debounce(fn, delay, e) {
     let timer;
     let baseTime = new Date().getTime();
     return function() {
@@ -18,7 +18,7 @@ function debounce(fn, delay) {
             clearTimeout(timer);
         }
         timer = setTimeout(() => {
-            fn();
+            fn(e);
         }, delay);
     }
 }
@@ -39,8 +39,27 @@ function deboucne2(fn, delay) {
 
 }
 
-const fn = debounce(() => {
-    console.log('lalala');
+// 存在问题：1. 无法传递事件参数 2. 调用fn函数的对象 this指向
+// 优化版本
+function debounceAdvance(fn, delay) {
+    // timer是一个定时器
+    let timer = null;
+    // 返回一个闭包函数，用闭包保存timer确保其不会被销毁，重复触发会清除上一次的定时器
+    return function() {
+        // 保存事件参数
+        let arg = arguments;
+        // 清除上一次的定时器
+        clearTimeout(timer);
+        // 设置新的定时器
+        timer = setTimeout(() => {
+            // 如果不改变this指向，则会指向fn定义环境
+            fn.call(this, arg);
+        }, delay)
+    }
+}
+
+const fn = debounceAdvance((e) => {
+    console.log('lalala', e, this);
 }, 1000);
 
 console.log(1, fn())
