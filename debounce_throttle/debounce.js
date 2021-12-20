@@ -1,5 +1,5 @@
 // 防抖
-
+//! 防抖不需要比对时间
 /**
  * 使用场景：一般用在连续的事件只需要触发一次回调的场景，如：
  * 1. 搜索框搜索输入。只需用户最后一次输入完，发送请求
@@ -53,7 +53,7 @@ function debounceAdvance(fn, delay) {
         // 设置新的定时器
         timer = setTimeout(() => {
             // 如果不改变this指向，则会指向fn定义环境
-            fn.call(this, arg);
+            fn.apply(this, arg);
         }, delay)
     }
 }
