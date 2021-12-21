@@ -54,7 +54,7 @@ function throttle2(fn, delay) {
     }
 }
 
-// 定时器+时间戳
+// 定时器+时间戳 最终写法
 function throttle3(fn, delay) {
     // 初始化定时器
     let timer = null;
