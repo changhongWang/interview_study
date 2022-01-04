@@ -21,6 +21,11 @@ function curry(fn, args) {
     }
 }
 
+// es6实现
+function es6_curry(fn, ...args) {
+    return fn.length <= args.length ? fn(...args) : curry.bind(null, fn, ...args);
+}
+
 const fn = curry(function(a,b,c) {
     return a+b+c;
 })
