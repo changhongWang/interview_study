@@ -43,11 +43,7 @@ function shallowCopy3() {
 }
 
 // 4. 手写实现浅拷贝
-function shallowCopy4(obj) {
-
-}
-
-// Object.keys 实现
+// 自己手写的 - Object.keys 实现 - 针对数组没办法处理
 function shallowCopy(obj) {
     const keys = Object.keys(obj);
     const newObj = {};
@@ -74,26 +70,35 @@ obj2.name = 'chang';
 // 改变引用类型
 obj2.favourite.train = 'CRH';
 
-console.log(obj1); // favourite会发生改变
-console.log(obj2);
+// console.log(obj1); // favourite会发生改变
+// console.log(obj2);
 
+const arr1 = [1,2,3]
+const arr2 = shallowCopyLast(arr1);
+console.log(arr2);
 
-
-// 浅拷贝的实现;
-
+// 教程写法：浅拷贝的实现; 注意要判断是object还是数组，分开创建不同的对象 - for...in实现
 function shallowCopyN(object) {
     // 只拷贝对象
     if (!object || typeof object !== "object") return;
-  
+
     // 根据 object 的类型判断是新建一个数组还是对象
     let newObject = Array.isArray(object) ? [] : {};
-  
+
     // 遍历 object，并且判断是 object 的属性才拷贝
     for (let key in object) {
-      if (object.hasOwnProperty(key)) {
+        if (object.hasOwnProperty(key)) {
         newObject[key] = object[key];
-      }
+        }
     }
-  
+
     return newObject;
-  }
+}
+// 延伸：1. for...in和for...of的区别。    2. 判断对象和判断数组 方便的方式
+
+// for...in和for...of的区别
+/**
+ * for in遍历的是索引; for of遍历的是值
+ * for in总是得到对象的key或数组、字符串的下标
+ * for of总是得到对象的value或数组、字符串的值
+ */
