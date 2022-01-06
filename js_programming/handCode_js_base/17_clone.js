@@ -101,4 +101,6 @@ function shallowCopyN(object) {
  * for in遍历的是索引; for of遍历的是值
  * for in总是得到对象的key或数组、字符串的下标
  * for of总是得到对象的value或数组、字符串的值
+ * for of 只能用于遍历number/数组/字符串/set/map等拥有迭代器对象的集合，但是不能遍历对象，因为Object没有迭代器对象(iterator)
+ * 如果想遍历对象的属性，可以使用for in循环或者Object.keys等方法
  */
