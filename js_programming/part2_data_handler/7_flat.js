@@ -1,3 +1,4 @@
+// 实现数组的flat方法
 function flat(arr, depth) {
     // 先判断异常场景
     if (!Array.isArray(arr) || depth <= 0) {
