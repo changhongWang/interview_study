@@ -26,12 +26,31 @@ function add2(num) {
     }
     return _add;
 }
-console.log(add2(1)(2)(3) == '6')
+// console.log(add2(1)(2)(3) == '6')
 
 // 参数长度不固定
 function add3(...args) {
     return args.reduce((a, b) => a + b, 0);
 }
-function curry(fn) {
+// 将传入的函数变成柯里化函数的工具函数
+function currify(fn) {
     let args = [];
+    return function temp(...newArgs) {
+        if (newArgs.length) {
+            args = [
+                ...args,
+                ...newArgs
+            ]
+            return temp;
+        } else {
+            let val = fn.apply(this, args);
+            args = [];
+            return val;
+        }
+    }
 }
+
+let addCurry = currify(add3);
+console.log(addCurry(1)(2)(3)(4, 5)())  //15
+console.log(addCurry(1)(2)(3, 4, 5)())  //15
+console.log(addCurry(1)(2, 3, 4, 5)())  //15
